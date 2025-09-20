@@ -1,5 +1,25 @@
 import { use, useState } from 'react'
 
+const Statistics = (props) => {
+  if (!props.number) 
+    return (<><p>No feedback given</p></>);
+  return (
+    <>
+    good {props.good}
+    <br />
+    neutral {props.neutral}
+    <br />
+    bad {props.bad}
+    <br />
+    all {props.number}
+    <br />
+    <Average number={props.number} totalScore={props.totalScore}/>
+    <br />
+    <Percentage number={props.number} good={props.good}/>
+    </>
+  );
+}
+
 const Average = (props) => {
   if (!props.number)
     return (<>there is no feedback yet</>);
@@ -50,17 +70,7 @@ const App = () => {
     <Button onClick={updateNeutral} text={"neutral"}/>
     <Button onClick={updateBad} text={"bad"}/>
     <h1>statistics</h1>
-    good {good}
-    <br />
-    neutral {neutral}
-    <br />
-    bad {bad}
-    <br />
-    all {number}
-    <br />
-    <Average number={number} totalScore={totalScore}/>
-    <br />
-    <Percentage number={number} good={good}/>
+    <Statistics good={good} neutral={neutral}  bad={bad} number={number} totalScore={totalScore}/>
     </>
   );
 }
