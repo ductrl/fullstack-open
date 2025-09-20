@@ -1,19 +1,28 @@
 import { use, useState } from 'react'
 
-const StatisticLine = (props) => <>{props.text} {props.value}{props.unit}<br/></>;
+const StatisticLine = (props) =>  {
+  return (
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}{props.unit}</td>
+    </tr>
+  );
+}
 
 const Statistics = (props) => {
   if (!props.number) 
-    return (<><p>No feedback given</p></>);
+    return (<div><p>No feedback given</p></div>);
   return (
-    <>
-    <StatisticLine text={"good"} value={props.good} unit={""}/>
-    <StatisticLine text={"neutral"} value={props.neutral} unit={""}/>
-    <StatisticLine text={"bad"} value={props.bad} unit={""}/>
-    <StatisticLine text={"all"} value={props.number} unit={""}/>
-    <StatisticLine text={"average"} value={1.0 * props.totalScore / props.number} unit=""/>
-    <StatisticLine text={"positive"} value={100.0 * props.good / props.number} unit={"%"}/>
-    </>
+    <div>
+      <table>
+        <StatisticLine text={"good"} value={props.good} unit={""}/>
+        <StatisticLine text={"neutral"} value={props.neutral} unit={""}/>
+        <StatisticLine text={"bad"} value={props.bad} unit={""}/>
+        <StatisticLine text={"all"} value={props.number} unit={""}/>
+        <StatisticLine text={"average"} value={1.0 * props.totalScore / props.number} unit=""/>
+        <StatisticLine text={"positive"} value={100.0 * props.good / props.number} unit={"%"}/>
+      </table>
+    </div>
   );
 }
 
