@@ -1,38 +1,20 @@
 import { use, useState } from 'react'
 
+const StatisticLine = (props) => <>{props.text} {props.value}{props.unit}<br/></>;
+
 const Statistics = (props) => {
   if (!props.number) 
     return (<><p>No feedback given</p></>);
   return (
     <>
-    good {props.good}
-    <br />
-    neutral {props.neutral}
-    <br />
-    bad {props.bad}
-    <br />
-    all {props.number}
-    <br />
-    <Average number={props.number} totalScore={props.totalScore}/>
-    <br />
-    <Percentage number={props.number} good={props.good}/>
+    <StatisticLine text={"good"} value={props.good} unit={""}/>
+    <StatisticLine text={"neutral"} value={props.neutral} unit={""}/>
+    <StatisticLine text={"bad"} value={props.bad} unit={""}/>
+    <StatisticLine text={"all"} value={props.number} unit={""}/>
+    <StatisticLine text={"average"} value={1.0 * props.totalScore / props.number} unit=""/>
+    <StatisticLine text={"positive"} value={100.0 * props.good / props.number} unit={"%"}/>
     </>
   );
-}
-
-const Average = (props) => {
-  if (!props.number)
-    return (<>there is no feedback yet</>);
-  
-  // console.log(props.number);
-  return (<>average {1.0 * props.totalScore / props.number}</>);
-}
-
-const Percentage = (props) => {
-  if (!props.number)
-    return (<>there is no feedback yet</>);
-
-  return (<>positive {100.0 * props.good / props.number}%</>)
 }
 
 const Button = (props) => <button onClick={props.onClick}>{props.text}</button>;
