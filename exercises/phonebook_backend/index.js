@@ -1,7 +1,11 @@
 const express = require('express');
+const morgan = require('morgan');
 const app = express();
 
 app.use(express.json());
+
+morgan.token('person', (req) => JSON.stringify(req.body));
+app.use(morgan(':method :url :status :response-time ms :person'));
 
 let persons = [
     { 
@@ -83,4 +87,5 @@ const PORT = 3001;
 app.listen(PORT);
 console.log('Phonebook is displayed in http://localhost:3001/api/persons');
 console.log('Info requests can be made at http://localhost:3001/info');
+// app.use(morgan('combined', ':method :url :status :response-time ms :res'));
 
