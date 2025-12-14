@@ -15,6 +15,7 @@ const App = () => {
       .getAll()
       .then(initialResponse => {
         setNotes(initialResponse);
+        setErrorMessage(null);
       })
   }, []);
 
