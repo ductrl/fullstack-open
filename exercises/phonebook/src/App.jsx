@@ -4,8 +4,8 @@ import Filter from './components/Filter';
 import Notification from './components/Notification';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
-import notesService from './services/notes';
-import notes from './services/notes';
+import notesService from './services/persons';
+import persons from './services/persons';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
