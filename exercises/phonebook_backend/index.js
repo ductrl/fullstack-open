@@ -83,7 +83,7 @@ app.post('/api/persons/', (request, response) => {
     response.json(newPerson);
 })
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT);
 console.log('Phonebook is displayed in http://localhost:3001/api/persons');
 console.log('Info requests can be made at http://localhost:3001/info');
