@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
@@ -12,15 +13,17 @@ app.use(morgan(':method :url :status :response-time ms :person'));
 app.get('/api/persons', (request, response) => {
   Person.find({}).then(persons => {
     response.json(persons);
-  })
+  });
 });
 
 app.get('/info', (request, response) => {
     const now = new Date();
-    response.send(`
+    Person.find({}).then(persons => {
+      response.send(`
         <p>Phonebook has info for ${persons.length} people</p>
         <p>${now}</p>
         `);
+    });
 })
 
 app.get('/api/persons/:id', (request, response) => {
