@@ -42,24 +42,29 @@ app.delete('/api/persons/:id', (request, response) => {
 const checkNameExist = (name) => persons.some(p => p.name === name);
 
 app.post('/api/persons/', (request, response) => {
-    const id = Math.floor(Math.random() * 1000 + 1);
     const body = request.body;
 
     if (!body.name) 
       return response.status(400).json({ error: 'name is missing' });
     if (!body.number) 
       return response.status(400).json({ error: 'number is missing' });
-    if (checkNameExist(body.name))
-      return response.status(400).json({ error: 'name must be unique' });
+    // if (checkNameExist(body.name))
+    //   return response.status(400).json({ error: 'name must be unique' });
 
     const newPerson = {
-      id: String(id),
-      ...body,
-    };    
-    
-    persons = persons.concat(newPerson);
+      name: body.name,
+      number: body.number
+    };
 
-    response.json(newPerson);
+    const person = new Person(newPerson);
+
+    person.save()
+      .then(result => {
+        console.log(`Added ${newPerson.name} number ${newPerson.number} to the phonebook!`);
+      })
+      .catch(error => {
+        console.log(`Error while adding ${newPerson.name}: `, error.message);
+      });
 })
 
 const PORT = process.env.PORT || 3001;
