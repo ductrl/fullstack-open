@@ -27,14 +27,9 @@ app.get('/info', (request, response) => {
 })
 
 app.get('/api/persons/:id', (request, response) => {
-    const id = request.params.id;
-    const person = persons.find(p => p.id === id);
-    console.log(person);
-    
-    if (!person)
-        return response.status(404).end();
-
+  Person.findById(request.params.id).then(person => {
     response.json(person);
+  });
 })
 
 app.delete('/api/persons/:id', (request, response) => {
