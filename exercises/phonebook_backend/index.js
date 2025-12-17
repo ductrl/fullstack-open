@@ -7,8 +7,10 @@ const Person = require('./models/person.js');
 const errorHandler = (error, request, response, next) => {
   console.log(error.message);
 
-  if (error.name == 'CastError')
-    response.status(400).send('malformatted id');
+  if (error.name === 'CastError')
+    return response.status(400).json({ error: 'malformatted id' });
+  if (error.name === 'ValidationError')
+    return response.status(400).json({ error: error.message });
   
   next(error);
 };
@@ -72,7 +74,7 @@ app.put('/api/persons/:id', (request, response, next) => {
 
 const checkNameExist = (name) => persons.some(p => p.name === name);
 
-app.post('/api/persons/', (request, response) => {
+app.post('/api/persons/', (request, response, next) => {
     const body = request.body;
 
     if (!body.name) 
@@ -93,9 +95,7 @@ app.post('/api/persons/', (request, response) => {
       .then(result => {
         console.log(`Added ${newPerson.name} number ${newPerson.number} to the phonebook!`);
       })
-      .catch(error => {
-        console.log(`Error while adding ${newPerson.name}: `, error.message);
-      });
+      .catch(error => next(error) );
 })
 
 app.use(errorHandler);
