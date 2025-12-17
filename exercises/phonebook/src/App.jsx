@@ -4,7 +4,7 @@ import Filter from './components/Filter';
 import Notification from './components/Notification';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
-import notesService from './services/persons';
+import personService from './services/persons';
 import persons from './services/persons';
 
 const App = () => {
@@ -16,7 +16,7 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
-    notesService
+    personService
       .getAll()
       .then(initialPersons => setPersons(initialPersons));
   }, []);
@@ -27,7 +27,7 @@ const App = () => {
     const person = persons.find(p => p.name === newPerson.name);
     const updatedPerson = {...person, number: newPerson.number};
 
-    notesService
+    personService
       .update(person.id, updatedPerson)
       .then(returnedPerson => { 
         setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson));
@@ -41,7 +41,7 @@ const App = () => {
         setTimeout(() => {
           setErrorMessage(null);
         }, 5000);
-      })
+      });
   }
 
   const addPerson = (event) => {
@@ -58,7 +58,7 @@ const App = () => {
       return;
     }
 
-    notesService
+    personService
       .create(newPerson)
       .then(returnedPersons => {
         console.log(returnedPersons);
@@ -68,6 +68,13 @@ const App = () => {
         setSuccessMessage(`Added ${newPerson.name}`);
         setTimeout(() => {
           setSuccessMessage(null);
+        }, 5000);
+      })
+      .catch(error => {
+        console.log(error.response.data.error);
+        setErrorMessage(error.response.data.error);
+        setTimeout(() => {
+          setErrorMessage(null);
         }, 5000);
       });
   }
@@ -87,7 +94,7 @@ const App = () => {
 
   const handleDelete = (id, name) => {
     if (window.confirm(`Delete ${name}?`)) {
-      notesService
+      personService
         .deleteId(id)
         .then(() => {
           const updatedPersons = persons.filter(p => p.id !== id);
