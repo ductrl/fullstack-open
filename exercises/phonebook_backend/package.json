@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "node --watch index.js",
     "test": "echo \\\\\\\"Error: no test specified\\\\\\ && exit 1",
-    "buidl:ui": "rm -rf dist && cd ../phonebook && run run build && cp -r dist ../phonebook_backend",
+    "build:ui": "rm -rf dist && cd ../phonebook && npm run build && cp -r dist ../phonebook_backend",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuid && git push"
   },
   "author": "Mike Ly",

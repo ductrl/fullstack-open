@@ -6,14 +6,17 @@ mongoose.set('strictQuery', false);
 
 mongoose.connect(url, { family: 4, })
     .then(result => { 
-        console.log('connectede to MongoDB!');
+        console.log('connected to MongoDB!');
     })
     .catch(error => {
         console.log('error while connecting to MongoDB: ', error.message);
     })
 
 const personSchema = new mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        minLength: 3,
+    },
     number: String,
 });
 
