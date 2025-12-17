@@ -1,0 +1,7 @@
+PUT http://localhost:3001/api/persons/694220c540bd73a6afcf8792
+Content-Type: application/json
+
+{
+    "name": "LeBron James my glory king",
+    "number": "232323232323"
+}
