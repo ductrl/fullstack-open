@@ -11,7 +11,7 @@ const errorHandler = (error, request, response, next) => {
     return response.status(400).json({ error: 'malformatted id' });
   if (error.name === 'ValidationError')
     return response.status(400).json({ error: error.message });
-  
+
   next(error);
 };
 
@@ -28,13 +28,13 @@ app.get('/api/persons', (request, response) => {
 });
 
 app.get('/info', (request, response) => {
-    const now = new Date();
-    Person.find({}).then(persons => {
-      response.send(`
+  const now = new Date();
+  Person.find({}).then(persons => {
+    response.send(`
         <p>Phonebook has info for ${persons.length} people</p>
         <p>${now}</p>
         `);
-    });
+  });
 });
 
 app.get('/api/persons/:id', (request, response) => {
@@ -70,32 +70,32 @@ app.put('/api/persons/:id', (request, response, next) => {
       });
     })
     .catch(error => next(error));
-}); 
+});
 
-const checkNameExist = (name) => persons.some(p => p.name === name);
+// const checkNameExist = (name) => persons.some(p => p.name === name);
 
 app.post('/api/persons/', (request, response, next) => {
-    const body = request.body;
+  const body = request.body;
 
-    if (!body.name) 
-      return response.status(400).json({ error: 'name is missing' });
-    if (!body.number) 
-      return response.status(400).json({ error: 'number is missing' });
+  if (!body.name)
+    return response.status(400).json({ error: 'name is missing' });
+  if (!body.number)
+    return response.status(400).json({ error: 'number is missing' });
     // if (checkNameExist(body.name))
     //   return response.status(400).json({ error: 'name must be unique' });
 
-    const newPerson = {
-      name: body.name,
-      number: body.number
-    };
+  const newPerson = {
+    name: body.name,
+    number: body.number
+  };
 
-    const person = new Person(newPerson);
+  const person = new Person(newPerson);
 
-    person.save()
-      .then(result => {
-        console.log(`Added ${newPerson.name} number ${newPerson.number} to the phonebook!`);
-      })
-      .catch(error => next(error) );
+  person.save()
+    .then(() => {
+      console.log(`Added ${newPerson.name} number ${newPerson.number} to the phonebook!`);
+    })
+    .catch(error => next(error) );
 })
 
 app.use(errorHandler);
