@@ -1,12 +1,7 @@
+require('dotenv').config()
 const mongoose = require('mongoose');
 
-if (process.argv.length < 3) {
-  console.log('give password as an argument');
-  process.exit(1);
-}
-
-const password = process.argv[2];
-const url = `mongodb+srv://ductrl:${password}@fullstackopen.2inlmhp.mongodb.net/noteApp?retryWrites=true&w=majority&appName=fullStackOpen`;
+const url = process.env.TEST_MONGODB_URI;
 
 mongoose.set('strictQuery', false);
 mongoose.connect(url, { family: 4 });
@@ -18,19 +13,19 @@ const noteSchema = new mongoose.Schema({
 
 const Note = mongoose.model('Note', noteSchema);
 
-// const note = new Note({
-//     content: 'HTML is easy',
-//     important: true,
-// });
+const note = new Note({
+  content: 'Test Note 2',
+  important: false,
+});
 
-// note.save().then(result => {
-//     console.log('note saved!');
-//     mongoose.connection.close();
-// });
-
-Note.find({}).then(result => {
-  result.forEach(note => {
-    console.log(note);
-  });
+note.save().then(result => {
+  console.log('note saved!');
   mongoose.connection.close();
 });
+
+// Note.find({}).then(result => {
+//   result.forEach(note => {
+//     console.log(note);
+//   });
+//   mongoose.connection.close();
+// });

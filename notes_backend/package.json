@@ -4,9 +4,9 @@
   "description": "part 03 of the full stack open course",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "node --watch index.js",
-    "test": "echo \\\"Error: no test specified\\\" && exit 1",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development node --watch index.js",
+    "test": "cross-env NODE_ENV=test node --test",
     "lint": "eslint .",
     "build:ui": "rm -rf dist && cd ../notes && npm run build && cp -r dist ../notes_backend",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
@@ -15,6 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
+    "cross-env": "^10.1.0",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "mongoose": "^9.0.1"
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@stylistic/eslint-plugin": "^5.6.1",
     "eslint": "^9.39.2",
-    "globals": "^16.5.0"
+    "globals": "^16.5.0",
+    "supertest": "^7.1.4"
   }
 }
