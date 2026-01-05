@@ -1,5 +1,4 @@
 const blogRouter = require('express').Router();
-const { update } = require('lodash');
 // @ts-check
 /** @type {import('mongoose').Model<any>} */
 const Blog = require('../models/blog');
