@@ -1,9 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pa2VseSIsImlkIjoiNjk2NTc2ODJkMTJlOTRlM2U5YTIzN2QxIiwiaWF0IjoxNzcwMDk3MDIzfQ.miaVLaspn2J6J0DEW4W48PDbFO2f30NYNpZ5dDWzZFk
 
 {
-  "title": "Test Post",
-  "author": "Shakespeare",
+  "title": "New post testing user authentication",
+  "author": "Mike Ly",
   "url": "https://pizza.com",
   "likes": 23
 }
