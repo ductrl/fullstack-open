@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Footer from './components/Footer';
 import Note from './components/Note';
 import Notification from './components/Notification';
@@ -16,6 +16,7 @@ const App = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
+  const noteFormRef = useRef();
 
   useEffect(() => {
     noteService
@@ -54,20 +55,14 @@ const App = () => {
       })
   }
 
-  const addNote = (event) => {
-    event.preventDefault();
-    const noteObject = {
-      content: newNote,
-      important: Math.random() < 0.5,
-      id: `${notes.length + 1}`
-    };
-
+  const addNote = (noteObject) => {
+    noteFormRef.current.toggleVisibility();
     noteService
       .create(noteObject)
       .then(returnedNote => {
         setNotes(notes.concat(returnedNote));
         setNewNote('');
-      })
+      });
   }
 
   const handleNoteChange = (event) => {
@@ -109,7 +104,7 @@ const App = () => {
   )
 
   const noteForm = () => (
-    <Togglable buttonlabel="new note">
+    <Togglable buttonlabel="new note" ref={noteFormRef}>
       <NoteForm
         onSubmit={addNote}
         value={newNote}
