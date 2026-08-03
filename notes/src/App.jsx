@@ -104,12 +104,8 @@ const App = () => {
   )
 
   const noteForm = () => (
-    <Togglable buttonlabel="new note" ref={noteFormRef}>
-      <NoteForm
-        onSubmit={addNote}
-        value={newNote}
-        handleChange={handleNoteChange}
-      />
+    <Togglable buttonLabel="new note" ref={noteFormRef}>
+      <NoteForm createNote={addNote}/>
     </Togglable>
   )
 
